@@ -13,4 +13,6 @@
 extern void encrypt_data(void *buffer, size_t len);
 extern void decrypt_data(void *buffer, size_t len);
 
+extern void encrypt_file(const char *srcPath, const char *destPath);
+extern void decrypt_file(const char *srcPath, const char *destPath);
 #endif /* yyttdatacryption_h */

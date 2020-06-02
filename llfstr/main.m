@@ -13,7 +13,7 @@
 
 extern NSString * resolvePath(NSString *path);
 extern void createDirectoryIfNotExisted(NSURL *directory);
-extern bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(void *, size_t));
+extern bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char *, const char *));
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -40,21 +40,21 @@ int main(int argc, const char * argv[]) {
         if(strcmp(opt, "help") == 0) //文件加密
         {
             printf("\n==========>llfcrypt help<===========\n");
-            printf("\'fenc file\' 表示对文件进行加密（file为文件路径），加密文件会自动输出到子目录encryption下\n");
-            printf("\'fenc directory\' 表示对目录下（directory为目录路径）所有文件进行加密(不包括子目录),加密文件会自动输出到子目录encryption下\n");
-            printf("\'fdec file\' 表示对文件进行解密（file为文件路径），解密文件会自动输出到子目录decryption下\n");
-            printf("\'fdec directory\' 表示对目录下（directory为目录路径）所有文件进行解密(不包括子目录),解密文件会自动输出到子目录decryption下\n");
+            printf("\'fenc file\' 表示对文件进行加密（file为文件路径），加密文件会自动输出到子目录encryption下，并加上\'ytenc\'后缀\n");
+            printf("\'fenc directory\' 表示对目录下（directory为目录路径）所有文件进行加密(不包括子目录),加密文件会自动输出到子目录encryption下，并加上\'ytenc\'后缀\n");
+            printf("\'fdec file\' 表示对文件进行解密（file为文件路径），解密文件会自动输出到子目录decryption下，并删除\'ytenc\'扩展名\n");
+            printf("\'fdec directory\' 表示对目录下（directory为目录路径）所有文件进行解密(不包括子目录),解密文件会自动输出到子目录decryption下，并删除\'ytenc\'扩展名\n");
 
             printf("\n==========>Help end<===========\n");
         }
         else if(strcmp(opt, "fenc") == 0) //文件加密
         {
-            cryptionAtPath(fpath, "encryption", encrypt_data);
+            cryptionAtPath(fpath, "encryption", encrypt_file);
             
         }
         else if(strcmp(opt, "fdec") == 0) //文件解密
         {
-            cryptionAtPath(fpath, "decryption", decrypt_data);
+            cryptionAtPath(fpath, "decryption", decrypt_file);
         }
         else {
             printf("<========invalid input==========>\n");
@@ -126,7 +126,7 @@ void cryptionFile(NSString *srcPath, NSString *destPath, void (*f)(void *, size_
 }
 
 
-bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(void *, size_t))
+bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char *, const char *))
 {
     NSString *abPath = resolvePath([NSString stringWithCString:cPath encoding:NSUTF8StringEncoding]);
     BOOL isDir = NO;
@@ -139,6 +139,17 @@ bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(void *, size_t))
     NSString *curDir = abPath;
     if(!isDir)
         curDir = [abPath stringByDeletingLastPathComponent];
+    
+    
+    NSString *(^resovleFileName)(NSString *) = ^(NSString *name) {
+        NSString *newName = name;
+        if( f == encrypt_file)
+            newName = [name stringByAppendingPathExtension:@"ytenc"];
+        else if([name.pathExtension isEqualToString:@"ytenc"])
+            newName = [name stringByDeletingPathExtension];
+        
+        return newName;
+    };
         
     
     NSString *desDir = [curDir stringByAppendingPathComponent:[NSString stringWithCString:subDir encoding:NSUTF8StringEncoding]];
@@ -152,17 +163,19 @@ bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(void *, size_t))
           for(NSString *name in files)
           {
               NSString *path1 = [abPath stringByAppendingPathComponent:name];
-            //  NSString *fName = [NSString stringWithFormat:@"%@.e%@",[name stringByDeletingPathExtension],[name pathExtension]];
-              NSString *path2 = [desDir stringByAppendingPathComponent:name];
-              cryptionFile(path1,path2,f);
+              
+              NSString *newName = resovleFileName(name);
+              NSString *path2 = [desDir stringByAppendingPathComponent:newName];
+              f([path1 cStringUsingEncoding:NSUTF8StringEncoding],[path2 cStringUsingEncoding:NSUTF8StringEncoding]);
               
           }
     }
     else //指定的文件
     {
         NSString *name = [abPath lastPathComponent];
-        NSString *path2 = [desDir stringByAppendingPathComponent:name];
-        cryptionFile(abPath,path2,f);
+        NSString *newName = resovleFileName(name);
+        NSString *path2 = [desDir stringByAppendingPathComponent:newName];
+        f([abPath cStringUsingEncoding:NSUTF8StringEncoding],[path2 cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     
     printf("=========>>finished processing!!!\n");
