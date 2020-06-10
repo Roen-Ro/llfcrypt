@@ -7,9 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353AD3685D62C10E660815C4 /* libPods-tingleetool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BC773F02BF2B01AED8943B /* libPods-tingleetool.a */; };
+		592161DCDAC9249C0D243ABF /* Pods_llfcrypt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA62C33B0843BDBC3DE2123 /* Pods_llfcrypt.framework */; };
 		9F13409D24810D5100684BDA /* NSString+uti.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13409C24810D5100684BDA /* NSString+uti.m */; };
 		9F317277247F58BA00352AF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F317276247F58BA00352AF6 /* main.m */; };
 		9F31727F247F5D8E00352AF6 /* yyttdatacryption.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */; };
+		9FD56E602489DD7700C32DD5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD56E5F2489DD7700C32DD5 /* main.m */; };
+		9FEE5913249085120041F9C8 /* yyttdatacryption.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */; };
+		9FEE59162490862E0041F9C8 /* LeancloudUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE59152490862E0041F9C8 /* LeancloudUploader.m */; };
+		9FEE591824908E630041F9C8 /* NSString+uti.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13409C24810D5100684BDA /* NSString+uti.m */; };
+		9FEE591D2490CF480041F9C8 /* NSDate+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE591B2490CF480041F9C8 /* NSDate+Utility.m */; };
+		9FEE591E2490CF480041F9C8 /* NSData+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE591C2490CF480041F9C8 /* NSData+DataConvert.m */; };
+		9FEE5921249108890041F9C8 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE5920249108880041F9C8 /* NSDictionary+Utility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -22,15 +31,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		9FD56E5B2489DD7700C32DD5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7211BEF2E378504C63FB4D23 /* Pods-llfcrypt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-llfcrypt.release.xcconfig"; path = "Target Support Files/Pods-llfcrypt/Pods-llfcrypt.release.xcconfig"; sourceTree = "<group>"; };
+		7CA62C33B0843BDBC3DE2123 /* Pods_llfcrypt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_llfcrypt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D64700F3944FFE99FDD7E8F /* Pods-llfcrypt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-llfcrypt.debug.xcconfig"; path = "Target Support Files/Pods-llfcrypt/Pods-llfcrypt.debug.xcconfig"; sourceTree = "<group>"; };
+		8E13EB045D807F4514E77F73 /* Pods-tingleetool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tingleetool.debug.xcconfig"; path = "Target Support Files/Pods-tingleetool/Pods-tingleetool.debug.xcconfig"; sourceTree = "<group>"; };
 		9F13409B24810D5100684BDA /* NSString+uti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+uti.h"; sourceTree = "<group>"; };
 		9F13409C24810D5100684BDA /* NSString+uti.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+uti.m"; sourceTree = "<group>"; };
 		9F317273247F58BA00352AF6 /* llfcrypt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = llfcrypt; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F317276247F58BA00352AF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9F31727D247F5D8E00352AF6 /* yyttdatacryption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yyttdatacryption.h; sourceTree = "<group>"; };
 		9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = yyttdatacryption.c; sourceTree = "<group>"; };
+		9FD56E5D2489DD7700C32DD5 /* tingleetool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tingleetool; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FD56E5F2489DD7700C32DD5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9FEE59142490862E0041F9C8 /* LeancloudUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeancloudUploader.h; sourceTree = "<group>"; };
+		9FEE59152490862E0041F9C8 /* LeancloudUploader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeancloudUploader.m; sourceTree = "<group>"; };
+		9FEE59192490CF480041F9C8 /* NSData+DataConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+DataConvert.h"; sourceTree = "<group>"; };
+		9FEE591A2490CF480041F9C8 /* NSDate+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utility.h"; sourceTree = "<group>"; };
+		9FEE591B2490CF480041F9C8 /* NSDate+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utility.m"; sourceTree = "<group>"; };
+		9FEE591C2490CF480041F9C8 /* NSData+DataConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+DataConvert.m"; sourceTree = "<group>"; };
+		9FEE591F249108880041F9C8 /* NSDictionary+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utility.h"; sourceTree = "<group>"; };
+		9FEE5920249108880041F9C8 /* NSDictionary+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utility.m"; sourceTree = "<group>"; };
+		B7BC773F02BF2B01AED8943B /* libPods-tingleetool.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tingleetool.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E47FA9C532E65B7A21C9A65B /* Pods-tingleetool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tingleetool.release.xcconfig"; path = "Target Support Files/Pods-tingleetool/Pods-tingleetool.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,17 +72,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592161DCDAC9249C0D243ABF /* Pods_llfcrypt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FD56E5A2489DD7700C32DD5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				353AD3685D62C10E660815C4 /* libPods-tingleetool.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92403C4A24F26A955D09555C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7CA62C33B0843BDBC3DE2123 /* Pods_llfcrypt.framework */,
+				B7BC773F02BF2B01AED8943B /* libPods-tingleetool.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9F31726A247F58BA00352AF6 = {
 			isa = PBXGroup;
 			children = (
+				9FEE591724908E4C0041F9C8 /* PbulicUtilities */,
 				9F317275247F58BA00352AF6 /* llfstr */,
+				9FD56E5E2489DD7700C32DD5 /* tingleetool */,
 				9F317274247F58BA00352AF6 /* Products */,
+				A1E6E9CB9B00C96BF0EBCDEB /* Pods */,
+				92403C4A24F26A955D09555C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				9F317273247F58BA00352AF6 /* llfcrypt */,
+				9FD56E5D2489DD7700C32DD5 /* tingleetool */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,12 +121,46 @@
 			isa = PBXGroup;
 			children = (
 				9F317276247F58BA00352AF6 /* main.m */,
+			);
+			path = llfstr;
+			sourceTree = "<group>";
+		};
+		9FD56E5E2489DD7700C32DD5 /* tingleetool */ = {
+			isa = PBXGroup;
+			children = (
+				9FD56E5F2489DD7700C32DD5 /* main.m */,
+				9FEE59142490862E0041F9C8 /* LeancloudUploader.h */,
+				9FEE59152490862E0041F9C8 /* LeancloudUploader.m */,
+			);
+			path = tingleetool;
+			sourceTree = "<group>";
+		};
+		9FEE591724908E4C0041F9C8 /* PbulicUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				9FEE59192490CF480041F9C8 /* NSData+DataConvert.h */,
+				9FEE591C2490CF480041F9C8 /* NSData+DataConvert.m */,
+				9FEE591A2490CF480041F9C8 /* NSDate+Utility.h */,
+				9FEE591B2490CF480041F9C8 /* NSDate+Utility.m */,
 				9F13409B24810D5100684BDA /* NSString+uti.h */,
 				9F13409C24810D5100684BDA /* NSString+uti.m */,
 				9F31727D247F5D8E00352AF6 /* yyttdatacryption.h */,
 				9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */,
+				9FEE591F249108880041F9C8 /* NSDictionary+Utility.h */,
+				9FEE5920249108880041F9C8 /* NSDictionary+Utility.m */,
 			);
-			path = llfstr;
+			path = PbulicUtilities;
+			sourceTree = "<group>";
+		};
+		A1E6E9CB9B00C96BF0EBCDEB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7D64700F3944FFE99FDD7E8F /* Pods-llfcrypt.debug.xcconfig */,
+				7211BEF2E378504C63FB4D23 /* Pods-llfcrypt.release.xcconfig */,
+				8E13EB045D807F4514E77F73 /* Pods-tingleetool.debug.xcconfig */,
+				E47FA9C532E65B7A21C9A65B /* Pods-tingleetool.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -79,6 +170,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F31727A247F58BA00352AF6 /* Build configuration list for PBXNativeTarget "llfcrypt" */;
 			buildPhases = (
+				E62DA8ACFE98F682DA9D04B2 /* [CP] Check Pods Manifest.lock */,
 				9F31726F247F58BA00352AF6 /* Sources */,
 				9F317270247F58BA00352AF6 /* Frameworks */,
 				9F317271247F58BA00352AF6 /* CopyFiles */,
@@ -92,6 +184,25 @@
 			productReference = 9F317273247F58BA00352AF6 /* llfcrypt */;
 			productType = "com.apple.product-type.tool";
 		};
+		9FD56E5C2489DD7700C32DD5 /* tingleetool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9FD56E612489DD7700C32DD5 /* Build configuration list for PBXNativeTarget "tingleetool" */;
+			buildPhases = (
+				826ADCC092C9941D0CE3DB9E /* [CP] Check Pods Manifest.lock */,
+				9FD56E592489DD7700C32DD5 /* Sources */,
+				9FD56E5A2489DD7700C32DD5 /* Frameworks */,
+				9FD56E5B2489DD7700C32DD5 /* CopyFiles */,
+				00262A2E9A79A5CD429D1BF9 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tingleetool;
+			productName = tingleetool;
+			productReference = 9FD56E5D2489DD7700C32DD5 /* tingleetool */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -102,6 +213,9 @@
 				ORGANIZATIONNAME = roen;
 				TargetAttributes = {
 					9F317272247F58BA00352AF6 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					9FD56E5C2489DD7700C32DD5 = {
 						CreatedOnToolsVersion = 11.3;
 					};
 				};
@@ -120,9 +234,74 @@
 			projectRoot = "";
 			targets = (
 				9F317272247F58BA00352AF6 /* llfcrypt */,
+				9FD56E5C2489DD7700C32DD5 /* tingleetool */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00262A2E9A79A5CD429D1BF9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tingleetool/Pods-tingleetool-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tingleetool/Pods-tingleetool-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tingleetool/Pods-tingleetool-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		826ADCC092C9941D0CE3DB9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-tingleetool-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E62DA8ACFE98F682DA9D04B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-llfcrypt-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9F31726F247F58BA00352AF6 /* Sources */ = {
@@ -132,6 +311,20 @@
 				9F317277247F58BA00352AF6 /* main.m in Sources */,
 				9F13409D24810D5100684BDA /* NSString+uti.m in Sources */,
 				9F31727F247F5D8E00352AF6 /* yyttdatacryption.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FD56E592489DD7700C32DD5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FEE591E2490CF480041F9C8 /* NSData+DataConvert.m in Sources */,
+				9FEE5921249108890041F9C8 /* NSDictionary+Utility.m in Sources */,
+				9FEE59162490862E0041F9C8 /* LeancloudUploader.m in Sources */,
+				9FD56E602489DD7700C32DD5 /* main.m in Sources */,
+				9FEE591D2490CF480041F9C8 /* NSDate+Utility.m in Sources */,
+				9FEE591824908E630041F9C8 /* NSString+uti.m in Sources */,
+				9FEE5913249085120041F9C8 /* yyttdatacryption.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,20 +442,62 @@
 		};
 		9F31727B247F58BA00352AF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D64700F3944FFE99FDD7E8F /* Pods-llfcrypt.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S9E46X77CC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/llfstr/ffmpeg/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/llfstr/ffmpeg/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		9F31727C247F58BA00352AF6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7211BEF2E378504C63FB4D23 /* Pods-llfcrypt.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S9E46X77CC;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/llfstr/ffmpeg/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/llfstr/ffmpeg/lib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9FD56E622489DD7700C32DD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8E13EB045D807F4514E77F73 /* Pods-tingleetool.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S9E46X77CC;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9FD56E632489DD7700C32DD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E47FA9C532E65B7A21C9A65B /* Pods-tingleetool.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S9E46X77CC;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -284,6 +519,15 @@
 			buildConfigurations = (
 				9F31727B247F58BA00352AF6 /* Debug */,
 				9F31727C247F58BA00352AF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9FD56E612489DD7700C32DD5 /* Build configuration list for PBXNativeTarget "tingleetool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9FD56E622489DD7700C32DD5 /* Debug */,
+				9FD56E632489DD7700C32DD5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

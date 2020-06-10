@@ -11,6 +11,8 @@
 #import "yyttdatacryption.h"
 
 
+
+
 extern NSString * resolvePath(NSString *path);
 extern void createDirectoryIfNotExisted(NSURL *directory);
 extern bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char *, const char *));
@@ -61,6 +63,7 @@ int main(int argc, const char * argv[]) {
             printf("\n帮助输入 llfcrypt help!\n");
         }
     }
+    
     return 0;
 }
 
