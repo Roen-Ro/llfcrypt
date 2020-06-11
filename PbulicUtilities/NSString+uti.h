@@ -20,3 +20,4 @@
 
 @end
 
+extern NSString * resolvePath(NSString *path);

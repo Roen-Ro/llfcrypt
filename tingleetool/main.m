@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LeancloudUploader.h"
-
+#import "NSString+uti.h"
 
 void ffmpeg() {
     
@@ -35,22 +35,67 @@ void ffmpeg() {
 }
 
 
-void leancloudUpload(void) {
+void leancloudUpload(NSString *path) {
     
-    LeancloudUploader *upl = [[LeancloudUploader alloc]initWithDirectory:[NSURL fileURLWithPath:@"/Users/jiangwenbin/Documents/听力资源/英语/飞屋环游记(OK)"]];
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_group_enter(group);
+     NSRunLoop *rlp = [NSRunLoop currentRunLoop];
+    
+    LeancloudUploader *upl = [[LeancloudUploader alloc]initWithDirectory:[NSURL fileURLWithPath:path]];
+    
+    //注意，这里不能用 dispatch_group,因为业务代码里面会有很多block是在主线程回调，而如果用了dispatch_group主线程就会处于等待状态，导致永远没有回调
+    __block BOOL finished = NO;
     [upl startUploadWithCompletion:^{
-        dispatch_group_leave(group);
+        finished = YES;
+        exit(0);
     }];
 
-    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-    NSLog(@"leancloudUpload Task Finished!!!!");
+    [rlp run];
+   
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        leancloudUpload();
+        
+        const char *cmd = argv[0];//命令本身
+        const char *opt = argv[1];//操作指令
+        const char *fpath = argv[2];//路径，文件或目录
+        
+        
+//        opt = "lcup";
+//        fpath = "/Users/jiangwenbin/Documents/听力资源/英语/Love Actually(OK)";
+        
+        if(opt == nil || strlen(opt)==0) {
+
+            printf("\n输入指令，帮助输入 \'tingleetool help\'\n");
+            return 0;
+        }
+        
+        if(strcmp(opt, "help") == 0) //文件加密
+        {
+            printf("\n==========>tingleetool help<===========\n");
+            printf("\'tingleetool lcup directory\' 对目录下面的文件上传到leancloud云端");
+
+            printf("\n==========>Help end<===========\n");
+        }
+        else if(strcmp(opt, "lcup") == 0) //文件加密
+        {
+            NSString *path = [NSString stringWithCString:fpath encoding:NSUTF8StringEncoding];
+            path = resolvePath(path);
+            BOOL dir;
+            BOOL exist = [[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:&dir];
+            if(!exist)
+                NSLog(@"Error: directory does not exist at %@",path);
+            
+            if(!dir)
+                NSLog(@"Error: %@ is not a directory",path);
+            
+            leancloudUpload(path);
+            
+        }
+        else {
+            printf("<========invalid input==========>\n");
+            printf("\n帮助输入 tingleetool help!\n");
+        }
+        
     }
     return 0;
 }

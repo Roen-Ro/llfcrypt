@@ -11,9 +11,6 @@
 #import "yyttdatacryption.h"
 
 
-
-
-extern NSString * resolvePath(NSString *path);
 extern void createDirectoryIfNotExisted(NSURL *directory);
 extern bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char *, const char *));
 
@@ -67,42 +64,6 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-
-NSString * resolvePath(NSString *path)
-{
-
-    if([path hasPrefix:@"~/"])
-        return [path stringByResolvingSymlinksInPath];
-    
-    if([path hasPrefix:@"/"])
-        return path;
-    
-    
-    NSString *curDir = [[NSFileManager defaultManager] currentDirectoryPath];
-    NSArray *inCmps = [path componentsSeparatedByString:@"/"];
-    NSMutableArray *curCmps = [[curDir componentsSeparatedByString:@"/"] mutableCopy];
-    
-
-    for(NSString *s in inCmps) {
-        if([s isEqualToString:@".."]) {
-            [curCmps removeLastObject];
-        }
-        else if([s isEqualToString:@"."]) {
-            //do nothing
-        }
-        else {
-            [curCmps addObject:s];
-        }
-    }
-    
-    NSMutableString *mStr = [NSMutableString string];
-    for(NSString *s in curCmps) {
-        [mStr appendFormat:@"%@/",s];
-    }
-    
-    [mStr deleteCharactersInRange:NSMakeRange(mStr.length-1, 1)];
-    return mStr;
-}
 
 
 void createDirectoryIfNotExisted(NSURL *directory)

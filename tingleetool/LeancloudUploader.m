@@ -14,6 +14,7 @@
 #import "yyttdatacryption.h"
 #import <AVOSCloud/AVOSCloud.h>
 #import <AVFoundation/AVFoundation.h>
+#import "AsyncHelper.h"
 
 @interface UploadSubFileInfo : NSObject<NSCoding>
 
@@ -210,12 +211,31 @@
     return;\
 }
 
+AVFile *sfile;
 -(void)startUploadWithCompletion:(void (^)(void))completion {
+    
     
     [AVOSCloud setApplicationId:@"TDWwApWrbUyEBsum0HOJ6ETa"
                       clientKey:@"wVcNurfHXqy67S0fx1iiX16d"
                 serverURLString:@"https://api.yingyutingting.com"];
     
+//    // 关闭调试日志
+    [AVOSCloud setAllLogsEnabled:NO];
+    [AVOSCloud setLogLevel:AVLogLevelNone];
+    [AVOSCloud setVerbosePolicy:kAVVerboseNone];
+
+//#warning test
+//    AVFile *f = [AVFile fileWithLocalPath:@"/Users/jiangwenbin/Desktop/英语听听截图/img.png" error:nil];
+//    [f uploadWithProgress:^(NSInteger number) {
+//        NSLog(@"--->>> %d",number);
+//    } completionHandler:^(BOOL succeeded, NSError * _Nullable error) {
+//        NSLog(@"completionHandler %@",error);
+//        completion();
+//    }];
+//    
+//    
+//    return;
+
     _completionBlock = completion;
     [self doEncryption];
     [self uploadSubFiles];
@@ -256,118 +276,130 @@
         EXIT_IF_ERROR(error);
         
         if(objects.count > 0)
-            [self saveResourceObject:objects.firstObject];
+            [self saveResourceObjectAsync:objects.firstObject];
         else
-            [self saveResourceObject:nil];
+            [self saveResourceObjectAsync:nil];
     }];
 }
 
 -(void)uploadSubfile:(UploadSubFileInfo *)file completion:(void (^)(void))completion {
     
-    dispatch_group_t group = dispatch_group_create();
-    if(!file.audioCloudId)
-    {
-        NSError *ferror;
-        AVFile *f = [AVFile fileWithLocalPath:file.audioPath error:&ferror];
-        EXIT_IF_ERROR(ferror);
-        dispatch_group_enter(group);
-        NSLog(@"Begin Upload %@",file.audioPath.lastPathComponent);
-        [f uploadWithProgress:^(NSInteger percent) {
-        //    NSLog(@"Progress %@ %d",file.audioPath.lastPathComponent,percent);
-        } completionHandler:^(BOOL succeeded, NSError * _Nullable error) {
-            EXIT_IF_ERROR(error);
-            file.audioCloudId = f.objectId;
-            file.audioCloudUrl = f.url;
-            [self saveStatus];
-            NSLog(@"Finished Upload %@",file.audioPath.lastPathComponent);
-            dispatch_group_leave(group);
-        }];
-    }
-    
-    if(!file.srtCloudId)
-    {
-        NSError *ferror;
-        AVFile *f = [AVFile fileWithLocalPath:file.srtPath error:&ferror];
-        EXIT_IF_ERROR(ferror);
-        dispatch_group_enter(group);
-        NSLog(@"Begin Upload %@",file.srtPath.lastPathComponent);
-        [f uploadWithProgress:^(NSInteger percent) {
-        //    NSLog(@"Progress %@ %d",file.srtPath.lastPathComponent,percent);
-        } completionHandler:^(BOOL succeeded, NSError * _Nullable error) {
-            EXIT_IF_ERROR(error);
-            file.srtCloudId = f.objectId;
-            file.srtCloudUrl = f.url;
-            [self saveStatus];
-            NSLog(@"Finished Upload %@",file.srtPath.lastPathComponent);
-            dispatch_group_leave(group);
-        }];
-    }
+    //因为下面的代码用到了dispatch_group,而AVFile回调会自动放到主线程，如果此方法在主线程执行的话就会导致线程一直处于dispatch_group_wait状态中
+    background_async(^{
         
-    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-    
-    completion();
+        dispatch_group_t group = dispatch_group_create();
+        if(!file.audioCloudId)
+        {
+            NSError *ferror;
+            AVFile *f = [AVFile fileWithLocalPath:file.audioPath error:&ferror];
+            EXIT_IF_ERROR(ferror);
+            dispatch_group_enter(group);
+            NSLog(@"Begin Upload %@",file.audioPath.lastPathComponent);
+            [f uploadWithProgress:^(NSInteger percent) {
+               // NSLog(@"Progress %@ %d",file.audioPath.lastPathComponent,percent);
+            } completionHandler:^(BOOL succeeded, NSError * _Nullable error) {
+                EXIT_IF_ERROR(error);
+                file.audioCloudId = f.objectId;
+                file.audioCloudUrl = f.url;
+                [self saveStatus];
+                NSLog(@"Finished Upload %@",file.audioPath.lastPathComponent);
+                dispatch_group_leave(group);
+            }];
+        }
+        
+        if(!file.srtCloudId)
+        {
+            NSError *ferror;
+            AVFile *f = [AVFile fileWithLocalPath:file.srtPath error:&ferror];
+            EXIT_IF_ERROR(ferror);
+            dispatch_group_enter(group);
+            NSLog(@"Begin Upload %@",file.srtPath.lastPathComponent);
+            [f uploadWithProgress:^(NSInteger percent) {
+              //  NSLog(@"Progress %@ %d",file.srtPath.lastPathComponent,percent);
+            } completionHandler:^(BOOL succeeded, NSError * _Nullable error) {
+                EXIT_IF_ERROR(error);
+                file.srtCloudId = f.objectId;
+                file.srtCloudUrl = f.url;
+                [self saveStatus];
+                NSLog(@"Finished Upload %@",file.srtPath.lastPathComponent);
+                dispatch_group_leave(group);
+            }];
+        }
+            
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+        
+        completion();
+    });
+
 }
 
--(void)saveResourceObject:(AVObject *)resObject {
+-(void)saveResourceObjectAsync:(AVObject *)resObject {
+    
+    
     if(!resObject)
         resObject = [AVObject objectWithClassName:@"EnttResource"];
     
-    [resObject setObject:self.cloudTitle forKey:@"title"];
-    [resObject setObject:_resInfo[@"desc"] forKey:@"desc"];
-    [resObject setObject:_resInfo[@"region"] forKey:@"region"];
-    [resObject setObject:_resInfo[@"type"] forKey:@"type"];
-    [resObject setObject:[self subfilesFiled] forKey:@"subfiles"];
-    
-    
-    AVFile *srtxFile = [resObject objectForKey:@"srtxFile"];
-    AVFile *coverFile = [resObject objectForKey:@"cover"];
-    
-//上传封面和完整字幕文件
-    dispatch_group_t group = dispatch_group_create();
-    NSError *readFileError;
-    if(!srtxFile) {
-        dispatch_group_enter(group);
-        NSLog(@"start upload srtx file");
-        NSString *path = [self fullSrtxPath];
-        srtxFile = [AVFile fileWithData:[NSData dataWithContentsOfFile:path] name:path.lastPathComponent];
-        if(!srtxFile) {
-            NSLog(@"Error:%@",readFileError);
-            exit(1);
-        }
+     background_async(^{
+        [resObject setObject:self.cloudTitle forKey:@"title"];
+        [resObject setObject:_resInfo[@"desc"] forKey:@"desc"];
+        [resObject setObject:_resInfo[@"region"] forKey:@"region"];
+        [resObject setObject:_resInfo[@"type"] forKey:@"type"];
+        [resObject setObject:[self subfilesFiled] forKey:@"subfiles"];
         
-        [srtxFile uploadWithCompletionHandler:^(BOOL succeeded, NSError * _Nullable error) {
-             EXIT_IF_ERROR(error);
-            [resObject setObject:srtxFile forKey:@"srtxFile"];
-            dispatch_group_leave(group);
-            NSLog(@"Finished upload srtx file");
-        }];
-    }
-    
-    if(!coverFile) {
-        dispatch_group_enter(group);
-        NSLog(@"start upload cover file");
-        coverFile = [AVFile fileWithLocalPath:[self.resourceDirectory.path stringByAppendingPathComponent:_coverFileName] error:&readFileError];
-        if(!coverFile) {
-            NSLog(@"Error:%@",readFileError);
-            exit(1);
-        }
         
-        [coverFile uploadWithCompletionHandler:^(BOOL succeeded, NSError * _Nullable error) {
-             EXIT_IF_ERROR(error);
-            [resObject setObject:srtxFile forKey:@"cover"];
-            dispatch_group_leave(group);
-            NSLog(@"Finished upload cover file");
-        }];
-    }
-    
-    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-    
-    NSLog(@"Start Upload EnttResource %@",self.cloudTitle);
-    [resObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        EXIT_IF_ERROR(error);
-        NSLog(@"Finished Upload EnttResource %@ !!",self.cloudTitle);
-        self.completionBlock();
-    }];
+        AVFile *srtxFile = [resObject objectForKey:@"srtxFile"];
+        AVFile *coverFile = [resObject objectForKey:@"cover"];
+        
+        //因为下面的代码用到了dispatch_group,而AVFile回调会自动放到主线程，如果此方法在主线程执行的话就会导致线程一直处于dispatch_group_wait状态中
+       
+            //上传封面和完整字幕文件
+            dispatch_group_t group = dispatch_group_create();
+            NSError *readFileError;
+            if(!srtxFile) {
+                dispatch_group_enter(group);
+                NSLog(@"start upload srtx file");
+                NSString *path = [self fullSrtxPath];
+                srtxFile = [AVFile fileWithData:[NSData dataWithContentsOfFile:path] name:path.lastPathComponent];
+                if(!srtxFile) {
+                    NSLog(@"Error:%@",readFileError);
+                    exit(1);
+                }
+                
+                [srtxFile uploadWithCompletionHandler:^(BOOL succeeded, NSError * _Nullable error) {
+                     EXIT_IF_ERROR(error);
+                    [resObject setObject:srtxFile forKey:@"srtxFile"];
+                    dispatch_group_leave(group);
+                    NSLog(@"Finished upload srtx file");
+                }];
+            }
+            
+            if(!coverFile) {
+                dispatch_group_enter(group);
+                NSLog(@"start upload cover file");
+                coverFile = [AVFile fileWithLocalPath:[self.resourceDirectory.path stringByAppendingPathComponent:_coverFileName] error:&readFileError];
+                if(!coverFile) {
+                    NSLog(@"Error:%@",readFileError);
+                    exit(1);
+                }
+                
+                [coverFile uploadWithCompletionHandler:^(BOOL succeeded, NSError * _Nullable error) {
+                     EXIT_IF_ERROR(error);
+                    [resObject setObject:coverFile forKey:@"cover"];
+                    dispatch_group_leave(group);
+                    NSLog(@"Finished upload cover file");
+                }];
+            }
+            
+            dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+            
+            NSLog(@"Start Upload EnttResource %@",self.cloudTitle);
+            [resObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                EXIT_IF_ERROR(error);
+                NSLog(@"Finished Upload EnttResource %@ !!",self.cloudTitle);
+                self.completionBlock();
+            }];
+    });
+
 }
 
 -(NSString *)fullSrtxPath {
@@ -389,14 +421,14 @@
 
 -(NSArray<NSString *> *)subfilesFiled {
     NSMutableArray *sFiles = [NSMutableArray arrayWithCapacity:_allMp3Files.count];
-    for(UploadSubFileInfo *f in _allMp3Files) {
+    for(UploadSubFileInfo *f in _allSubFiles) {
         NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithCapacity:5];
         [mdic setObject:f.audioCloudUrl forKey:@"audio_url"];
         [mdic setObject:f.audioCloudId forKey:@"audio_fileId"];
         [mdic setObject:[NSDate timeDescriptionOfTimeInterval:f.duration] forKey:@"duration"];
         [mdic setObject:f.srtCloudUrl forKey:@"srt_url"];
         [mdic setObject:f.srtCloudId forKey:@"srtx_fileId"];
-        [sFiles addObject:[mdic jsonString]];
+        [sFiles addObject:mdic];
     }
     return sFiles;
 }
