@@ -61,11 +61,11 @@ int main(int argc, const char * argv[]) {
         
         
 //        opt = "lcup";
-//        fpath = "/Users/jiangwenbin/Documents/听力资源/英语/Love Actually(OK)";
+//        fpath = "/Users/jiangwenbin/Documents/听力资源/英语/当幸福来敲门(OK)";
         
         if(opt == nil || strlen(opt)==0) {
 
-            printf("\n输入指令，帮助输入 \'tingleetool help\'\n");
+            printf("输入指令，帮助输入 \'tingleetool help\'\n");
             return 0;
         }
         

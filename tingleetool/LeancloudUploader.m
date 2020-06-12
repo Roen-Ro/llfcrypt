@@ -344,6 +344,8 @@ AVFile *sfile;
         [resObject setObject:_resInfo[@"desc"] forKey:@"desc"];
         [resObject setObject:_resInfo[@"region"] forKey:@"region"];
         [resObject setObject:_resInfo[@"type"] forKey:@"type"];
+        NSString *yearValue = _resInfo[@"year"];
+        [resObject setObject:[NSNumber numberWithInt:yearValue.intValue] forKey:@"year"];
         [resObject setObject:[self subfilesFiled] forKey:@"subfiles"];
         
         
