@@ -10,21 +10,26 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 void encrypt_data(void *buffer, size_t len) {
     char *pData = (char *)buffer;
     char v, c1, c2;
+    bool even = true;
     for(size_t i=0; i<len; i++) {
         v = pData[i];
-        if(i%2==0) {
+        if(even)//偶数位
+        {
             c1 = 0x69&(~v);//取反位    01101001
             c2 = 0x96&v;//保留原始值位  10010110
         }
-        else
+        else //奇数位
         {
             c1 = 0xf0&(~v);//取反位 高4位
             c2 = 0x0f&v;//保留位   低4位
         }
+        
+        even = !even;
         pData[i] = c1+c2;//合并
     }
 }

@@ -64,6 +64,7 @@ typedef enum {
 
 + (NSDateComponents *)componetsWithTimeInterval:(NSTimeInterval)timeInterval;
 + (NSString *)timeDescriptionOfTimeInterval:(NSTimeInterval)timeInterval;
+
 + (NSString *)timeDescription1OfTimeInterval:(NSTimeInterval)timeInterval;
 
 

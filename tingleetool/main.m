@@ -10,11 +10,11 @@
 #import "LeancloudUploader.h"
 #import "NSString+uti.h"
 
-void ffmpeg() {
+void ffmpegtask() {
     
     NSTask *task = [NSTask new];
     task.launchPath = @"/usr/local/bin/ffmpeg";
-    task.arguments = @[@"-i",@"/Users/jiangwenbin/Desktop/TED演讲/Bill.And.Melinda/BillGates_2014-950k.mp4"];
+    task.arguments = @[@"-i",@"/Users/jiangwenbin/Desktop/MF_Documents/sample-002.mkv",@"-vn",@"-acodec",@"copy",@"/Users/jiangwenbin/Desktop/MF_Documents/999998.m4a"];
     
     NSPipe *outputPipe = [NSPipe pipe];
     
@@ -55,13 +55,12 @@ void leancloudUpload(NSString *path) {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+        
+        //调试的时候参数可以在Edit scheme -> Arguments -> Arguments passed on launch中添加
         const char *cmd = argv[0];//命令本身
         const char *opt = argv[1];//操作指令
         const char *fpath = argv[2];//路径，文件或目录
         
-        
-//        opt = "lcup";
-//        fpath = "/Users/jiangwenbin/Documents/听力资源/英语/当幸福来敲门(OK)";
         
         if(opt == nil || strlen(opt)==0) {
 

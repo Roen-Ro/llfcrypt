@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F317272247F58BA00352AF6"
-               BuildableName = "llfcrypt"
-               BlueprintName = "llfcrypt"
+               BlueprintIdentifier = "9FD56E5C2489DD7700C32DD5"
+               BuildableName = "tingleetool"
+               BlueprintName = "tingleetool"
                ReferencedContainer = "container:llfstr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,15 +44,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F317272247F58BA00352AF6"
-            BuildableName = "llfcrypt"
-            BlueprintName = "llfcrypt"
+            BlueprintIdentifier = "9FD56E5C2489DD7700C32DD5"
+            BuildableName = "tingleetool"
+            BlueprintName = "tingleetool"
             ReferencedContainer = "container:llfstr.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "fdec /Users/jiangwenbin/Desktop/merge001.srtx.ytenc"
+            argument = "hello"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "word"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -67,9 +71,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F317272247F58BA00352AF6"
-            BuildableName = "llfcrypt"
-            BlueprintName = "llfcrypt"
+            BlueprintIdentifier = "9FD56E5C2489DD7700C32DD5"
+            BuildableName = "tingleetool"
+            BlueprintName = "tingleetool"
             ReferencedContainer = "container:llfstr.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

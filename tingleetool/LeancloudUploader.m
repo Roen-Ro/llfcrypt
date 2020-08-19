@@ -326,9 +326,10 @@ AVFile *sfile;
             }];
         }
             
-        dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            completion();
+        });
         
-        completion();
     });
 
 }
@@ -392,14 +393,17 @@ AVFile *sfile;
                 }];
             }
             
-            dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-            
+         dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+             
             NSLog(@"Start Upload EnttResource %@",self.cloudTitle);
-            [resObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                EXIT_IF_ERROR(error);
-                NSLog(@"Finished Upload EnttResource %@ !!",self.cloudTitle);
-                self.completionBlock();
-            }];
+             [resObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                 EXIT_IF_ERROR(error);
+                 NSLog(@"Finished Upload EnttResource %@ !!",self.cloudTitle);
+                 self.completionBlock();
+             }];
+             
+         });
+            
     });
 
 }

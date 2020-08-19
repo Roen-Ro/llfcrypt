@@ -17,6 +17,7 @@ extern bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+        
 #if debug
         for(int i=0;;i++) {
             const char *s = argv[i];
@@ -26,7 +27,7 @@ int main(int argc, const char * argv[]) {
                 printf("%d > %s\n",i,s);
         }
 #endif
-        
+
         const char *cmd = argv[0];//命令本身
         const char *opt = argv[1];//操作指令
         const char *fpath = argv[2];//路径，文件或目录
@@ -49,7 +50,7 @@ int main(int argc, const char * argv[]) {
         else if(strcmp(opt, "fenc") == 0) //文件加密
         {
             cryptionAtPath(fpath, "encryption", encrypt_file);
-            
+
         }
         else if(strcmp(opt, "fdec") == 0) //文件解密
         {
@@ -139,7 +140,9 @@ bool cryptionAtPath(const char *cPath, char *subDir, void (*f)(const char *, con
         NSString *name = [abPath lastPathComponent];
         NSString *newName = resovleFileName(name);
         NSString *path2 = [desDir stringByAppendingPathComponent:newName];
+        NSLog(@">>start process %@",abPath);
         f([abPath cStringUsingEncoding:NSUTF8StringEncoding],[path2 cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSLog(@"Finished process %@ to %@",abPath,path2);
     }
     
     printf("=========>>finished processing!!!\n");

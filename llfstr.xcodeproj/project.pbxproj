@@ -12,6 +12,8 @@
 		9F13409D24810D5100684BDA /* NSString+uti.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13409C24810D5100684BDA /* NSString+uti.m */; };
 		9F317277247F58BA00352AF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F317276247F58BA00352AF6 /* main.m */; };
 		9F31727F247F5D8E00352AF6 /* yyttdatacryption.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */; };
+		9FBF2EF824ED3960008EA889 /* FileLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBF2EF624ED395F008EA889 /* FileLog.m */; };
+		9FBF2EFB24ED39ED008EA889 /* NSObject+FDUti.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBF2EFA24ED39ED008EA889 /* NSObject+FDUti.m */; };
 		9FD56E602489DD7700C32DD5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD56E5F2489DD7700C32DD5 /* main.m */; };
 		9FEE5913249085120041F9C8 /* yyttdatacryption.c in Sources */ = {isa = PBXBuildFile; fileRef = 9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */; };
 		9FEE59162490862E0041F9C8 /* LeancloudUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE59152490862E0041F9C8 /* LeancloudUploader.m */; };
@@ -57,6 +59,10 @@
 		9F317276247F58BA00352AF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9F31727D247F5D8E00352AF6 /* yyttdatacryption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yyttdatacryption.h; sourceTree = "<group>"; };
 		9F31727E247F5D8E00352AF6 /* yyttdatacryption.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = yyttdatacryption.c; sourceTree = "<group>"; };
+		9FBF2EF624ED395F008EA889 /* FileLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLog.m; sourceTree = "<group>"; };
+		9FBF2EF724ED3960008EA889 /* FileLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLog.h; sourceTree = "<group>"; };
+		9FBF2EF924ED39ED008EA889 /* NSObject+FDUti.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+FDUti.h"; sourceTree = "<group>"; };
+		9FBF2EFA24ED39ED008EA889 /* NSObject+FDUti.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+FDUti.m"; sourceTree = "<group>"; };
 		9FD56E5D2489DD7700C32DD5 /* tingleetool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tingleetool; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FD56E5F2489DD7700C32DD5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9FEE59142490862E0041F9C8 /* LeancloudUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeancloudUploader.h; sourceTree = "<group>"; };
@@ -145,8 +151,12 @@
 		9FEE591724908E4C0041F9C8 /* PbulicUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				9FBF2EF724ED3960008EA889 /* FileLog.h */,
+				9FBF2EF624ED395F008EA889 /* FileLog.m */,
 				9FEE59192490CF480041F9C8 /* NSData+DataConvert.h */,
 				9FEE591C2490CF480041F9C8 /* NSData+DataConvert.m */,
+				9FBF2EF924ED39ED008EA889 /* NSObject+FDUti.h */,
+				9FBF2EFA24ED39ED008EA889 /* NSObject+FDUti.m */,
 				9FEE591A2490CF480041F9C8 /* NSDate+Utility.h */,
 				9FEE591B2490CF480041F9C8 /* NSDate+Utility.m */,
 				9F13409B24810D5100684BDA /* NSString+uti.h */,
@@ -319,8 +329,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FBF2EFB24ED39ED008EA889 /* NSObject+FDUti.m in Sources */,
 				9F317277247F58BA00352AF6 /* main.m in Sources */,
 				9F13409D24810D5100684BDA /* NSString+uti.m in Sources */,
+				9FBF2EF824ED3960008EA889 /* FileLog.m in Sources */,
 				9F31727F247F5D8E00352AF6 /* yyttdatacryption.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
