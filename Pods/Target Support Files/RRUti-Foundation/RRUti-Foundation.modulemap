@@ -1,0 +1,6 @@
+framework module RRUti {
+  umbrella header "RRUti-Foundation-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <RRUti/SubTitleProcess.h>
+#import <RRUti/SubLineManager.h>
 #import "LeancloudUploader.h"
-#import "NSString+uti.h"
+#import <NSString+Utility.h>
 
 void ffmpegtask() {
     
@@ -34,6 +36,22 @@ void ffmpegtask() {
     
 }
 
+NSString * absolute_path_from_input(const char *inputPath , BOOL *isDir)
+{
+    NSString *path = [NSString stringWithCString:inputPath encoding:NSUTF8StringEncoding];
+    path = resolvePath(path);
+    BOOL exist = [[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:isDir];
+    if(!exist) {
+        NSLog(@"Error: directory does not exist at %@",path);
+        exit(1);
+    }
+    return path;
+}
+
+#define CHECK_DIRECTORY(dir,path)    if(!dir) { \
+    NSLog(@"Error: %@ is not a directory",path);\
+    exit(1);\
+}
 
 void leancloudUpload(NSString *path) {
     
@@ -71,24 +89,71 @@ int main(int argc, const char * argv[]) {
         if(strcmp(opt, "help") == 0) //文件加密
         {
             printf("\n==========>tingleetool help<===========\n");
-            printf("\'tingleetool lcup directory\' 对目录下面的文件上传到leancloud云端");
+            printf("\'tingleetool lcup directory\' 对目录下面的文件上传到leancloud云端\n");
+            printf("\'tingleetool msrt directory [-org lan]\' 合并目录下的srt文件成一个多语言的merge.srtx文件,-org lan 可选，指定原语言，默认是en，指定中文 -org zh(来源文件说明：中文zh.srt,英文en.srt,日语jp.srt,法语fre.srt...)\n");
+            printf("\'tingleetool bsrt srt_path\' 将普通的双语srt文件分割成两个文件，例如中英双语字幕srt文件，会分割成中文和英文两个srt文件,并将文件存储在当前目录下\n");
+            printf("\'tingleetool zhensrtx srtx_path\' 将srtx文件转换成只包含中英双语字幕的srt文件\n");
+            printf("\'tingleetool offsetsrtx srtx_path second\' 设置srtx/srt偏移时间\n");
+            printf("\'tingleetool split -a audio_file_path -s srtx_file_path\' 自动分割音频和srtx文件\n");
 
             printf("\n==========>Help end<===========\n");
         }
-        else if(strcmp(opt, "lcup") == 0) //文件加密
+        else if(strcmp(opt, "lcup") == 0)
         {
-            NSString *path = [NSString stringWithCString:fpath encoding:NSUTF8StringEncoding];
-            path = resolvePath(path);
             BOOL dir;
-            BOOL exist = [[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:&dir];
-            if(!exist)
-                NSLog(@"Error: directory does not exist at %@",path);
-            
-            if(!dir)
-                NSLog(@"Error: %@ is not a directory",path);
-            
+            NSString *path = absolute_path_from_input(fpath, &dir);
+            CHECK_DIRECTORY(dir,path)
+
             leancloudUpload(path);
             
+        }
+        else if(strcmp(opt, "msrt") == 0){
+            BOOL dir;
+            NSString *path = absolute_path_from_input(fpath, &dir);
+            CHECK_DIRECTORY(dir,path)
+            NSString *orgLan = @"en";
+            const char *orl = argv[3];//原语言种类
+            if(orl && strcmp(orl, "-org") == 0) {
+                const char *lan = argv[4];
+                if(lan)
+                    orgLan = [NSString stringWithCString:lan encoding:NSUTF8StringEncoding];
+            }
+            
+            [SubTitleProcess mergeLinesAtDirectory:path withOriginLan:orgLan];
+        }
+        else if(strcmp(opt, "bsrt") == 0) {
+            NSString *path = absolute_path_from_input(fpath, NULL);
+            [SubTitleProcess breakLinesWithSrtFile:path];
+        }
+        else if(strcmp(opt, "zhensrtx") == 0) {
+            NSString *path = absolute_path_from_input(fpath, NULL);
+            [SubTitleProcess srtxToBilingualChs_EngSrt:path];
+        }
+        else if(strcmp(opt, "offsetsrtx") == 0) {
+            NSString *path = absolute_path_from_input(fpath, NULL);
+            SubLineManager *slm = [[SubLineManager alloc] initWithFile:path];
+            NSArray<SubLineInfo *> *lines = [slm parseFile];
+            NSTimeInterval offset = 0;
+            const char *offchar = argv[3];//偏移时间
+            if(!offchar)
+            {
+                NSLog(@"请输入偏移时间");
+                exit(1);
+            }
+            
+            NSString *offv = [NSString stringWithCString:offchar encoding:NSUTF8StringEncoding];
+            offset = [offv doubleValue];
+            
+            for(SubLineInfo *l in lines) {
+                l.timeTag += offset;
+            }
+            
+            NSLog(@"set offset %.1f with %@",offset,path);
+            NSRunLoop *rlp = [NSRunLoop currentRunLoop];
+            [slm saveLinesToFileCompletion:^(BOOL sucess) {
+                exit(!sucess);
+            }];
+            [rlp run];
         }
         else {
             printf("<========invalid input==========>\n");
@@ -98,3 +163,5 @@ int main(int argc, const char * argv[]) {
     }
     return 0;
 }
+
+

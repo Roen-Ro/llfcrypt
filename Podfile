@@ -3,9 +3,9 @@
 
 target 'llfcrypt' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+  # use_frameworks!
 
-  # Pods for llfcrypt
+  pod 'RRUti/Foundation', :path => '../RRUti/'
 
 end
 
@@ -13,6 +13,8 @@ target 'tingleetool' do
   # Comment the next line if you don't want to use dynamic frameworks
  # use_frameworks!
 
+  pod 'RRUti/Foundation', :path => '../RRUti/'
+  pod 'RRUti/Subtitle', :path => '../RRUti/'
   pod 'AVOSCloud'
 
 end

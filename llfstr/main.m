@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSString+uti.h"
+#import <NSString+Utility.h>
 #import "yyttdatacryption.h"
 
 

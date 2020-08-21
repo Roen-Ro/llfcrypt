@@ -1,0 +1,62 @@
+{
+  "name": "RRUti",
+  "version": "1.0.0",
+  "summary": "A short description of RRUti.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://gitee.com/zxllf23/RRUti",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "罗亮富": "zxllf23@163.com"
+  },
+  "source": {
+    "git": "https://gitee.com/zxllf23/RRUti.git",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "subspecs": [
+    {
+      "name": "Foundation",
+      "source_files": "RRUti/src/Foundation/**/*.{h,m,c}",
+      "platforms": {
+        "ios": "8.0",
+        "osx": "10.10"
+      },
+      "dependencies": {
+        "KVOController": [
+
+        ]
+      }
+    },
+    {
+      "name": "Subtitle",
+      "source_files": "RRUti/src/Subtitle/*.{h,m}",
+      "platforms": {
+        "ios": "8.0",
+        "osx": "10.10"
+      },
+      "dependencies": {
+        "RRUti/Foundation": [
+
+        ]
+      }
+    },
+    {
+      "name": "UI",
+      "source_files": "RRUti/src/UI/*.{h,m}",
+      "platforms": {
+        "ios": "8.0"
+      },
+      "frameworks": "UIKit",
+      "dependencies": {
+        "SVProgressHUD": [
+
+        ]
+      }
+    }
+  ]
+}

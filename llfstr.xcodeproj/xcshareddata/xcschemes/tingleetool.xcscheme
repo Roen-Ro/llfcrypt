@@ -52,11 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "hello"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "word"
+            argument = "offsetsrtx /Users/jiangwenbin/Desktop/hr.srt -2"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -1,4 +1,9 @@
 # llfcrypt
+
+## 安装
+- 从https://gitee.com/zxllf23/RRUti.git clone RRUti最新代码，存放地址和llfstr在同级目录
+- 在llfstr目录下执行`pod install`
+
 ## Description
 a simple encryption and decryption tool for mac
 
@@ -10,4 +15,12 @@ a simple encryption and decryption tool for mac
 
 
 # tingleetool
-将文件上传到云端 mac端命令行工具
+将文件上传到云端 mac端命令行工具，使用方式输入`tingleetool help`查看；   
+功能包括
+- 将资源自动上传到leancloud
+- 合并srt文件到merge.srtx
+- 自动拆分双语srt文件成两个
+- 拆分srtx成中英双语的srt文件
+- 设置srtx/srt文件偏移时间
+- 根据srtx/srt时间自动分割音频、字幕
+

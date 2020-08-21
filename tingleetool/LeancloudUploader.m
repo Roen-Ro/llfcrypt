@@ -7,7 +7,7 @@
 //
 
 #import "LeancloudUploader.h"
-#import "NSString+uti.h"
+#import "NSString+Utility.h"
 #import "NSDate+Utility.h"
 #import "NSDictionary+Utility.h"
 #include <sys/stat.h>
