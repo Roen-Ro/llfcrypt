@@ -10,6 +10,7 @@
 		1F5C0EC328F8EF2C516DD6BC /* libPods-llfcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B15294C94B5A8F2ABA8770C0 /* libPods-llfcrypt.a */; };
 		353AD3685D62C10E660815C4 /* libPods-tingleetool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BC773F02BF2B01AED8943B /* libPods-tingleetool.a */; };
 		9F317277247F58BA00352AF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F317276247F58BA00352AF6 /* main.m */; };
+		9FBF2F0224EFAF65008EA889 /* MediaSplitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBF2F0124EFAF65008EA889 /* MediaSplitHelper.m */; };
 		9FD56E602489DD7700C32DD5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD56E5F2489DD7700C32DD5 /* main.m */; };
 		9FEE59162490862E0041F9C8 /* LeancloudUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEE59152490862E0041F9C8 /* LeancloudUploader.m */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,8 @@
 		9F317273247F58BA00352AF6 /* llfcrypt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = llfcrypt; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F317276247F58BA00352AF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9FBF2EFF24EFA740008EA889 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9FBF2F0024EFAF65008EA889 /* MediaSplitHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaSplitHelper.h; sourceTree = "<group>"; };
+		9FBF2F0124EFAF65008EA889 /* MediaSplitHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaSplitHelper.m; sourceTree = "<group>"; };
 		9FD56E5D2489DD7700C32DD5 /* tingleetool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tingleetool; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FD56E5F2489DD7700C32DD5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9FEE59142490862E0041F9C8 /* LeancloudUploader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeancloudUploader.h; sourceTree = "<group>"; };
@@ -119,6 +122,8 @@
 				9FD56E5F2489DD7700C32DD5 /* main.m */,
 				9FEE59142490862E0041F9C8 /* LeancloudUploader.h */,
 				9FEE59152490862E0041F9C8 /* LeancloudUploader.m */,
+				9FBF2F0024EFAF65008EA889 /* MediaSplitHelper.h */,
+				9FBF2F0124EFAF65008EA889 /* MediaSplitHelper.m */,
 			);
 			path = tingleetool;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FBF2F0224EFAF65008EA889 /* MediaSplitHelper.m in Sources */,
 				9FEE59162490862E0041F9C8 /* LeancloudUploader.m in Sources */,
 				9FD56E602489DD7700C32DD5 /* main.m in Sources */,
 			);
