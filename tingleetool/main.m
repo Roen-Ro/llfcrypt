@@ -11,6 +11,7 @@
 #import <RRUti/SubLineManager.h>
 #import "LeancloudUploader.h"
 #import <NSString+Utility.h>
+#import "MediaSplitHelper.h"
 
 void ffmpegtask() {
     
@@ -73,6 +74,9 @@ void leancloudUpload(NSString *path) {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
+#warning test
+        [MediaSplitHelper splitTimePointWithSrtFile:@"/Users/lolaage/Desktop/srt_debug/en.srt" expectedSegmentDuration:600 trimStart:true];
+        return 0;
         
         //调试的时候参数可以在Edit scheme -> Arguments -> Arguments passed on launch中添加
         const char *cmd = argv[0];//命令本身
@@ -131,8 +135,6 @@ int main(int argc, const char * argv[]) {
         }
         else if(strcmp(opt, "offsetsrtx") == 0) {
             NSString *path = absolute_path_from_input(fpath, NULL);
-            SubLineManager *slm = [[SubLineManager alloc] initWithFile:path];
-            NSArray<SubLineInfo *> *lines = [slm parseFile];
             NSTimeInterval offset = 0;
             const char *offchar = argv[3];//偏移时间
             if(!offchar)
@@ -143,17 +145,8 @@ int main(int argc, const char * argv[]) {
             
             NSString *offv = [NSString stringWithCString:offchar encoding:NSUTF8StringEncoding];
             offset = [offv doubleValue];
-            
-            for(SubLineInfo *l in lines) {
-                l.timeTag += offset;
-            }
-            
             NSLog(@"set offset %.1f with %@",offset,path);
-            NSRunLoop *rlp = [NSRunLoop currentRunLoop];
-            [slm saveLinesToFileCompletion:^(BOOL sucess) {
-                exit(!sucess);
-            }];
-            [rlp run];
+            [SubTitleProcess setTimeOffset:offset forsrtAtPath:path];
         }
         else {
             printf("<========invalid input==========>\n");

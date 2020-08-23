@@ -12,10 +12,9 @@ DEPENDENCIES:
   - RRUti/Subtitle (from `../RRUti/`)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
-    - KVOController
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - AVOSCloud
+    - KVOController
 
 EXTERNAL SOURCES:
   RRUti:
@@ -28,4 +27,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f983bf4ec1e7f7450faee6ce17f1c8d5a04fe7e9
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.8.4

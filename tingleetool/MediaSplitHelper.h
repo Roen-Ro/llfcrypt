@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MediaSplitHelper : NSObject
 
++(NSDictionary *)splitTimePointWithSrtFile:(NSString *)path expectedSegmentDuration:(int)duration trimStart:(BOOL)trims;
+
 @end
 
 NS_ASSUME_NONNULL_END
