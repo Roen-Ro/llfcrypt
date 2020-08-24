@@ -166,7 +166,6 @@ int main(int argc, const char * argv[]) {
         }
         else if(strcmp(instruct, "resger") == 0) //自动分割资源并生成模板
         {
-            
             const char *inOpt1 = argv[2];//输入选项
             const char *inPath1 = argv[3];
             
@@ -201,11 +200,11 @@ int main(int argc, const char * argv[]) {
             }
             
             NSMutableDictionary *jsonDic = [[NSDictionary dictionaryFromString:jsonTemplate] mutableCopy];
-            NSNumber *trimmedBegin = dic[@"trimBegin"];
-            if(fabs(trimmedBegin.doubleValue) > 0.1) {
-                [SubTitleProcess setTimeOffset:-trimmedBegin.doubleValue forsrtAtPath:subtitlePath];//
-                [jsonDic setObject:[SubTitleProcess srtxTimeStringFromValue:trimmedBegin.doubleValue] forKey:@"trimmedBeginning"];
-            }
+//            NSNumber *trimmedBegin = dic[@"trimBegin"];
+//            if(fabs(trimmedBegin.doubleValue) > 0.1) {
+//                [SubTitleProcess setTimeOffset:-trimmedBegin.doubleValue forsrtAtPath:subtitlePath];//
+//                [jsonDic setObjesct:[SubTitleProcess srtxTimeStringFromValue:trimmedBegin.doubleValue] forKey:@"trimmedBeginning"];
+//            }
             
             NSArray <NSNumber *> *ts = dic[@"splitPoints"];
             NSMutableString *mas = [NSMutableString string];

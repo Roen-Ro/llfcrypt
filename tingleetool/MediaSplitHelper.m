@@ -30,6 +30,9 @@
     NSTimeInterval beginOffset = 0.0;
     if(trims)
         beginOffset = floor(lines.firstObject.startSecond) - 1;
+    
+    if(beginOffset < 0)
+        beginOffset = 0;
 
     NSTimeInterval s0 = 0.0;
     float r = 0.075;//时间允许浮动范围 15%
@@ -61,9 +64,10 @@
             nexSegMin = s0+(1-r)*duration;
             nexSegMax = s0+(1+r)*duration;
             
-    //        NSLog(@"%d - splitIndex:%ld l.startSecond:%.1f R(%.1f - %.1f) curMaxGap:%.1f",i,splitIndex,l.startSecond,nexSegMin,nexSegMax,curMaxGap);
+            NSLog(@"%d - split(index:%ld time:%@) curTime:%@ nextRange(%@ - %@) curMaxGap:%.1f",i+1,splitIndex,[SubTitleProcess srtxTimeStringFromValue:s0],[SubTitleProcess srtxTimeStringFromValue:l.startSecond],[SubTitleProcess srtxTimeStringFromValue: nexSegMin],[SubTitleProcess srtxTimeStringFromValue:nexSegMax],curMaxGap);
             
             curMaxGap = 0;
+            continue;
         }
         
         if(i>0) {
@@ -131,7 +135,7 @@
     
     int j = 1;
     NSMutableArray <NSNumber *> *ma = [times mutableCopy];
-    if(fabs(trimBeginning) > 0.01) {
+    if(trimBeginning > 0.1) {
         j = 0;
         [ma insertObject:@(trimBeginning) atIndex:0];
     }
