@@ -32,7 +32,7 @@
         beginOffset = floor(lines.firstObject.startSecond) - 1;
 
     NSTimeInterval s0 = 0.0;
-    float r = 0.15;//时间允许浮动范围 15%
+    float r = 0.075;//时间允许浮动范围 15%
     NSTimeInterval nexSegMin = 0; //下一段分割片段的最小时间
     NSTimeInterval nexSegMax = 0; //下一段分割片段的最大时间
     NSTimeInterval curMaxGap = 0.0;
@@ -61,7 +61,7 @@
             nexSegMin = s0+(1-r)*duration;
             nexSegMax = s0+(1+r)*duration;
             
-     //       NSLog(@"%d - splitIndex:%ld l.startSecond:%.1f R(%.1f - %.1f) curMaxGap:%.1f",i,splitIndex,l.startSecond,nexSegMin,nexSegMax,curMaxGap);
+    //        NSLog(@"%d - splitIndex:%ld l.startSecond:%.1f R(%.1f - %.1f) curMaxGap:%.1f",i,splitIndex,l.startSecond,nexSegMin,nexSegMax,curMaxGap);
             
             curMaxGap = 0;
         }
@@ -88,7 +88,7 @@
     int x = 1;
     for(NSArray<SrtxLine *> *segs in groups) {
         NSString *preName = [path.lastPathComponent stringByDeletingPathExtension];
-        NSString *fName =[NSString stringWithFormat:@"%@_%02d.srt",preName,x];
+        NSString *fName =[NSString stringWithFormat:@"%@_%02d",preName,x];
         NSString *dstPath = [path pathByReplaceingWithFileName:fName extention:nil];
         
         NSError *se;
@@ -103,7 +103,73 @@
     }
     
     
-    return nil;
+    //把分割时候偏移了的时间再补回去，提供给ffmpeg做分割
+    NSMutableArray <NSNumber *>*points = [times mutableCopy];
+    if(fabs(beginOffset) > 0.01) {
+        for(int m=0; m<points.count; m++) {
+            NSTimeInterval v = [points objectAtIndex:m].doubleValue + beginOffset;
+            [points replaceObjectAtIndex:m withObject:@(v)];
+        }
+    }
+    
+    return @{@"trimBegin":@(beginOffset),@"splitPoints":points};
+}
+
+
++(NSArray<NSString *> *)splitMediaFFmpegCmdWithSplitInfo:(NSDictionary *)splitsInfo
+                                                    file:(NSString *)filePath {
+    NSNumber *trimBegin = [splitsInfo objectForKey:@"trimBegin"];
+    NSArray *splitPoints = [splitsInfo objectForKey:@"splitPoints"];
+    return [self splitMediaFFmpegCmdWithSplitPoints:splitPoints file:filePath trimBeginning:trimBegin.doubleValue];
+    
+}
+
+//分割音/视频的ffmpeg命令，times：分割时间点 trimBeginning：去掉开头部分时间
++(NSArray<NSString *> *)splitMediaFFmpegCmdWithSplitPoints:(NSArray<NSNumber *>*)times
+                                                      file:(NSString *)filePath
+                                                    trimBeginning:(NSTimeInterval)trimBeginning {
+    
+    int j = 1;
+    NSMutableArray <NSNumber *> *ma = [times mutableCopy];
+    if(fabs(trimBeginning) > 0.01) {
+        j = 0;
+        [ma insertObject:@(trimBeginning) atIndex:0];
+    }
+    NSMutableArray *outCmds = [NSMutableArray arrayWithCapacity:ma.count];
+    NSTimeInterval preEnd = 0.0;
+    NSString *orgName = [filePath.lastPathComponent stringByDeletingPathExtension];
+    for(int i=0; i <= ma.count; i++) {
+        
+        NSTimeInterval t = 0;
+        NSTimeInterval d = 0;
+        if(i < ma.count) {
+            NSNumber *n = ma[i];
+            t = n.doubleValue;
+            d = t - preEnd;
+        }
+        else {
+            //do nothing
+        }
+
+        
+        NSString *fName =[NSString stringWithFormat:@"%@_%02d",orgName,j];
+        NSString *destPath = [filePath pathByReplaceingWithFileName:fName extention:nil];
+        
+        NSString *cmd;
+        NSString *ss = [NSString timeDisplayStringBySecond:preEnd];
+        NSString *tt = [NSString timeDisplayStringBySecond:d];
+        if(d>0.1)
+            cmd = [NSString stringWithFormat:@"ffmpeg -y -ss %@ -t %@ -i %@ -vcodec copy -acodec copy %@",ss,tt,filePath,destPath];
+        else
+           cmd = [NSString stringWithFormat:@"ffmpeg -y -ss %@ -i %@ -vcodec copy -acodec copy %@",ss,filePath,destPath];
+        [outCmds addObject:cmd];
+        
+        preEnd = t;
+        j++;
+    }
+    
+    return [outCmds copy];
+
 }
 
 @end

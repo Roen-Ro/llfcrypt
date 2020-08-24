@@ -52,8 +52,12 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "offsetsrtx /Users/lolaage/Desktop/en.srt -2"
+            argument = "resger -a /Users/jiangwenbin/Desktop/flipped/Flipped.2010.m4a -s /Users/jiangwenbin/Desktop/flipped/merge.srtx "
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "msrt /Users/jiangwenbin/Desktop/flipped"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

@@ -7,8 +7,7 @@
 //
 
 #import "LeancloudUploader.h"
-#import "NSString+Utility.h"
-#import "NSDate+Utility.h"
+#import <RRUti/RRUti_Foundation.h>
 #import "NSDictionary+Utility.h"
 #include <sys/stat.h>
 #import "yyttdatacryption.h"
@@ -149,15 +148,7 @@
 }
 
 -(NSDictionary *)parseJsonFile:(NSURL *)jsonUrl {
-    
-    NSData *data = [NSData dataWithContentsOfURL:jsonUrl];
-    
-    NSError *error = nil;
-    id jsonObject = [NSJSONSerialization
-                     JSONObjectWithData:data
-                     options:NSJSONReadingAllowFragments error:&error];
-    
-    return jsonObject;
+    return [NSDictionary dictionaryFromJsonFile:jsonUrl];
 }
 
 //对文件进行加密处理
@@ -491,3 +482,36 @@ AVFile *sfile;
 }
 
 @end
+
+
+NSString *jsonTemplate = @"{\
+  \"split\" :\"\",\
+  \"trimmedBeginning\" : \"00:00:01,010\",\
+  \"titles\" : {\
+    \"en\":\"\",\
+    \"zh\":\"\",\
+    \"fre\":\"\",\
+    \"es\":\"\",\
+    \"pt\":\"\",\
+    \"ar\":\"\",\
+    \"ms\":\"\",\
+    \"vi\":\"\",\
+    \"ja\":\"\",\
+    \"ko\":\"\",\
+    \"ru\":\"\",\
+    \"de\":\"\",\
+    \"pl\":\"\",\
+    \"it\":\"\",\
+    \"tr\":\"\",\
+    \"fa\":\"\"\
+  },\
+  \"title\" : \"I'm the Title\",\
+  \"year\" : \"2020\",\
+  \"type\" : \"Film\",\
+  \"region\" : \"U.S.A\",\
+  \"copyright\" : 1,\
+  \"recomendation\" : 8,\
+  \"difficulty\" : 6,\
+  \"videolink\" : \"\",\
+  \"desc\" : \"This part is for description\"\
+}";
