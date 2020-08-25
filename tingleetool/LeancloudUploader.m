@@ -161,8 +161,11 @@
         NSString *orgAudioPath = [self.resourceDirectory URLByAppendingPathComponent:f].path;
         NSString *srtPath = [orgAudioPath pathByReplaceingWithFileName:nil extention:@"srt"];
         if(![[NSFileManager defaultManager] fileExistsAtPath:srtPath]) {
-            NSLog(@"Error: expected file %@ not found",srtPath);
-            exit(1);
+            srtPath = [orgAudioPath pathByReplaceingWithFileName:nil extention:@"srtx"];
+            if(![[NSFileManager defaultManager] fileExistsAtPath:srtPath]) {
+                NSLog(@"Error: expected file %@ not found",srtPath);
+                exit(1);
+            }
         }
         
         NSString *desAudioPath = [orgAudioPath stringByAppendingString:@".ytenc"];

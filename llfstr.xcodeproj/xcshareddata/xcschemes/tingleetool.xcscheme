@@ -52,7 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "resger -a /Users/jiangwenbin/Desktop/flipped/Flipped.2010.m4a -s /Users/jiangwenbin/Desktop/flipped/merge.srtx "
+            argument = "resger -a /Users/jiangwenbin/Desktop/HarryPotter2004/Harry.Potter.2004.m4a -s /Users/jiangwenbin/Desktop/HarryPotter2004/merge.srtx"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "lcup /Users/jiangwenbin/Desktop/HarryPotter2004"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

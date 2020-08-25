@@ -194,18 +194,23 @@ int main(int argc, const char * argv[]) {
             NSTimeInterval duration = [durStr doubleValue];
             
             NSDictionary *dic = [MediaSplitHelper splitTimePointWithSrtFile:subtitlePath expectedSegmentDuration:duration trimStart:true];
+            
             NSArray *cmds = [MediaSplitHelper splitMediaFFmpegCmdWithSplitInfo:dic file:audioPath];
             for(NSString *s in cmds) {
                 ffmpegtask(s);
             }
             
-            NSMutableDictionary *jsonDic = [[NSDictionary dictionaryFromString:jsonTemplate] mutableCopy];
-//            NSNumber *trimmedBegin = dic[@"trimBegin"];
-//            if(fabs(trimmedBegin.doubleValue) > 0.1) {
-//                [SubTitleProcess setTimeOffset:-trimmedBegin.doubleValue forsrtAtPath:subtitlePath];//
-//                [jsonDic setObjesct:[SubTitleProcess srtxTimeStringFromValue:trimmedBegin.doubleValue] forKey:@"trimmedBeginning"];
-//            }
+            //写json模板，写入分割信息
+            NSString *templateJsonPath = [subtitlePath pathByReplaceingWithFileName:@"template" extention:@"json"];
+            NSMutableDictionary *jsonDic = [[NSDictionary dictionaryFromJsonFile:[NSURL fileURLWithPath:templateJsonPath]] mutableCopy];
+            if(!jsonDic)
+                jsonDic = [[NSDictionary dictionaryFromString:jsonTemplate] mutableCopy];
             
+            NSNumber *trimmedBegin = dic[@"trimBegin"];
+            if(trimmedBegin) {
+              //  [SubTitleProcess setTimeOffset:-trimmedBegin.doubleValue forsrtAtPath:subtitlePath];//
+                [jsonDic setObject:[SubTitleProcess srtxTimeStringFromValue:trimmedBegin.doubleValue] forKey:@"trimmedBeginning"];
+            }
             NSArray <NSNumber *> *ts = dic[@"splitPoints"];
             NSMutableString *mas = [NSMutableString string];
             for(NSNumber *n in ts) {
@@ -216,7 +221,7 @@ int main(int argc, const char * argv[]) {
                 [jsonDic setObject:mas forKey:@"split"];
             }
             
-            NSString *templateJsonPath = [subtitlePath pathByReplaceingWithFileName:@"template" extention:@"json"];
+            
             [[jsonDic jsonString] writeToURL:[NSURL fileURLWithPath:templateJsonPath] atomically:YES encoding:NSUTF8StringEncoding error:nil];
             
             

@@ -40,6 +40,7 @@
     NSTimeInterval nexSegMax = 0; //下一段分割片段的最大时间
     NSTimeInterval curMaxGap = 0.0;
     NSInteger splitIndex = -1;
+    NSInteger preSplitIndex = -2; //因为下面的逻辑有一句判断和splitIndex是否相等，所以初始值要喝splitIndex不一样
     
     NSMutableArray *ma = [NSMutableArray arrayWithCapacity:20];
     
@@ -54,8 +55,17 @@
         if(l.startSecond < nexSegMin)
             continue;
         
+        //注意：有可能在 nexSegMin - nexSegMax范围内，没有字幕，
+        //那就会出现一句同时满足 l.startSecond>nexSegMin && l.startSecond>nexSegMax 的情况
+        
         //超出允许分割范围,保存分割字幕，重置下一段分割判断范围
+        
         if(l.startSecond > nexSegMax) {
+            
+            //出现在 nexSegMin - nexSegMax 范围内，没有字幕，计算时候碰到的第一句字幕，就同时满足 l.startSecond>nexSegMin && l.startSecond>nexSegMax 的情况
+            if(preSplitIndex == splitIndex)
+                splitIndex = i;
+            
             if(splitIndex > 0) {
                 [ma addObject:[NSNumber numberWithInteger:splitIndex]];
                 s0 = [lines objectAtIndex:splitIndex].startSecond;
@@ -64,9 +74,10 @@
             nexSegMin = s0+(1-r)*duration;
             nexSegMax = s0+(1+r)*duration;
             
-            NSLog(@"%d - split(index:%ld time:%@) curTime:%@ nextRange(%@ - %@) curMaxGap:%.1f",i+1,splitIndex,[SubTitleProcess srtxTimeStringFromValue:s0],[SubTitleProcess srtxTimeStringFromValue:l.startSecond],[SubTitleProcess srtxTimeStringFromValue: nexSegMin],[SubTitleProcess srtxTimeStringFromValue:nexSegMax],curMaxGap);
+            NSLog(@"%d - split(index:%ld time:%@) curTime:%@ nextRange(%@ - %@) curMaxGap:%.1f",i+1,splitIndex+1,[SubTitleProcess srtxTimeStringFromValue:s0],[SubTitleProcess srtxTimeStringFromValue:l.startSecond],[SubTitleProcess srtxTimeStringFromValue: nexSegMin],[SubTitleProcess srtxTimeStringFromValue:nexSegMax],curMaxGap);
             
             curMaxGap = 0;
+            preSplitIndex = splitIndex;
             continue;
         }
         
